@@ -1,28 +1,28 @@
-import express from 'express';
-import logger from 'morgan';
-import cors from 'cors';
-import 'dotenv/config';
-import authRouter from './routes/api/auth-router.js';
-import quizRouter from './routes/api/todo-router.js';
+import express from "express";
+import logger from "morgan";
+import cors from "cors";
+import "dotenv/config";
+import authRouter from "./routes/api/auth-router.js";
+import todoRouter from "./routes/api/todo-router.js";
 
 const app = express();
 
-const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-app.use('api/auth', authRouter);
-app.use('/api/', quizRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/", todoRouter);
 
 app.use((req, res) => {
-  res.status(404).json({ message: 'Not found' });
+  res.status(404).json({ message: "Not found" });
 });
 
 app.use((err, req, res, next) => {
-  const { status = 500, message = 'Server error' } = err;
+  const { status = 500, message = "Server error" } = err;
   res.status(status).json({ message });
 });
 
