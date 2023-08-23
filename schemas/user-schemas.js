@@ -1,5 +1,5 @@
-import Joi from 'joi';
-import { emailRegexp } from '../constants/user-constants.js';
+import Joi from "joi";
+import { emailRegexp } from "../constants/user-constants.js";
 
 const userRegistrationSchema = Joi.object({
   name: Joi.string().required(),
