@@ -1,0 +1,7 @@
+services:
+  - name: bc52
+    env:
+      - key: NODE_ENV
+        value: production
+    buildCommand: npm install
+    startCommand: npm start
