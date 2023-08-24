@@ -14,7 +14,8 @@ const dashboard = new Schema(
       type: String,
     },
     columns: {
-      type: Array,
+      type: [Schema.Types.ObjectId],
+      ref: "column",
     },
     owner: {
       type: Schema.Types.ObjectId,
