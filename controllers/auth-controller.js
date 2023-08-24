@@ -2,6 +2,9 @@ import ctrlWrapper from "../decorators/ctrlWrapper.js";
 import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 import gravatar from "gravatar";
+import jwt from "jsonwebtoken";
+
+const { JWT_SECRET } = process.env;
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
