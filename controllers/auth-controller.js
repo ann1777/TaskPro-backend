@@ -1,8 +1,9 @@
-import ctrlWrapper from "../decorators/ctrlWrapper.js";
+import { ctrlWrapper } from "../decorators/index.js";
 import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
+import { HttpError } from "../helpers/index.js";
 
 const { JWT_SECRET } = process.env;
 
@@ -58,8 +59,10 @@ const signin = async (req, res) => {
   const payload = {
     id: user._id,
   };
-
+  console.log(payload);
+  console.log(user._id);
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
+  console.log(token);
 
   res.json({
     token,

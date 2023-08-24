@@ -1,6 +1,7 @@
 import express from "express";
 import dashboardSchema from "../../schemas/dashboard-schemas.js";
-import dashboardController from "../../controlers/dashboard-controller.js";
+import dashboardController from "../../controllers/dashboard-controller.js";
+import { validateBody } from "../../decorators/index.js";
 
 import {
   isEmptyBody,
@@ -16,23 +17,21 @@ const dashboardAddValidate = validateBody(dashboardSchema.dashboardAddSchema);
 dashboardRouter.use(authenticate);
 
 dashboardRouter.get("/", dashboardController.getAll);
-dashboardRouter.get("/:dashboardId", isValidId, dashboardController.getById);
+dashboardRouter.get("/:id", isValidId, dashboardController.getById);
 dashboardRouter.post(
   "/",
   isEmptyBody,
   dashboardAddValidate,
   dashboardController.add
 );
-dashboardRouter.delete(
-  "/:dashboardId",
-  isValidId,
-  dashboardController.deleteById
-);
+dashboardRouter.delete("/:id", isValidId, dashboardController.deleteById);
 
 dashboardRouter.put(
-  "/:dashboardId",
+  "/:id",
   isValidId,
   isEmptyBody,
   dashboardAddValidate,
   dashboardController.updateById
 );
+
+export default dashboardRouter;

@@ -1,4 +1,4 @@
-import ctrlWrapper from "../decorators/ctrlWrapper.js";
+import { ctrlWrapper } from "../decorators/index.js";
 import Dashboard from "../models/dashboard.js";
 import { HttpError } from "../helpers/index.js";
 
@@ -19,19 +19,19 @@ const add = async (req, res, next) => {
 };
 
 const getById = async (req, res, next) => {
-  const { dashboardId } = req.params;
-  const result = await Dashboard.findById(dashboardId);
+  const { id } = req.params;
+  const result = await Dashboard.findById(id);
   if (!result) {
-    throw HttpError(404, `Dashboard with id=${dashboardId} not found`);
+    throw HttpError(404, `Dashboard with id=${id} not found`);
   }
   res.json(result);
 };
 
 const deleteById = async (req, res, next) => {
-  const { dashboardId } = req.params;
-  const result = await Contact.findByIdAndDelete(dashboardId);
+  const { id } = req.params;
+  const result = await Dashboard.findByIdAndDelete(id);
   if (!result) {
-    throw HttpError(404, `Dashboard with id=${dashboardId} not found`);
+    throw HttpError(404, `Dashboard with id=${id} not found`);
   }
   res.json({
     message: "Delete success",
@@ -39,12 +39,12 @@ const deleteById = async (req, res, next) => {
 };
 
 const updateById = async (req, res) => {
-  const { dashboardId } = req.params;
-  const result = await Contact.findByIdAndUpdate(dashboardId, req.body, {
+  const { id } = req.params;
+  const result = await Dashboard.findByIdAndUpdate(id, req.body, {
     new: true,
   });
   if (!result) {
-    throw HttpError(404, `Movie with id=${dashboardId} not found`);
+    throw HttpError(404, `Dashboard with id=${id} not found`);
   }
   res.json(result);
 };
