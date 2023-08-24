@@ -56,17 +56,16 @@ const signin = async (req, res) => {
     id: user._id,
   };
 
-  // const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
 
   res.json({
-    email,
+    token,
   });
-  // upper email must be changed to token
 };
 
 const signout = async (req, res) => {
   const { _id } = req.user;
-  // await User.findByIdAndUpdate(_id, { token: "" });
+  await User.findByIdAndUpdate(_id, { token: "" });
 
   res.json({
     message: "Signout success",

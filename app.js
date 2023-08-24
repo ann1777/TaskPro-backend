@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/api/auth", authRouter);
-app.use("/api/", todoRouter);
+app.use("/api/dashboard", todoRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
