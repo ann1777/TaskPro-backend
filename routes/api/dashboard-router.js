@@ -5,7 +5,7 @@ import { validateBody } from "../../decorators/index.js";
 
 import {
   isEmptyBody,
-  isValidId,
+  isValidDashboardId,
   authenticate,
   upload,
 } from "../../middlewares/index.js";
@@ -17,18 +17,26 @@ const dashboardAddValidate = validateBody(dashboardSchema.dashboardAddSchema);
 dashboardRouter.use(authenticate);
 
 dashboardRouter.get("/", dashboardController.getAll);
-dashboardRouter.get("/:id", isValidId, dashboardController.getById);
+dashboardRouter.get(
+  "/:dashboardId",
+  isValidDashboardId,
+  dashboardController.getById
+);
 dashboardRouter.post(
   "/",
   isEmptyBody,
   dashboardAddValidate,
   dashboardController.add
 );
-dashboardRouter.delete("/:id", isValidId, dashboardController.deleteById);
+dashboardRouter.delete(
+  "/:dashboardId",
+  isValidDashboardId,
+  dashboardController.deleteById
+);
 
 dashboardRouter.put(
-  "/:id",
-  isValidId,
+  "/:dashboardId",
+  isValidDashboardId,
   isEmptyBody,
   dashboardAddValidate,
   dashboardController.updateById

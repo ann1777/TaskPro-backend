@@ -4,6 +4,7 @@ import User from "../models/user.js";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
 import { HttpError } from "../helpers/index.js";
+import Dashboard from "../models/dashboard.js";
 
 const { JWT_SECRET } = process.env;
 
@@ -56,16 +57,16 @@ const signin = async (req, res) => {
     throw HttpError(401, "Email or password invalid");
   }
 
+  const owner = user._id;
+  const dashboards = await Dashboard.find({ owner });
+
   const payload = {
     id: user._id,
   };
-  console.log(payload);
-  console.log(user._id);
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
-  console.log(token);
-
   res.json({
     token,
+    dashboards,
   });
 };
 
