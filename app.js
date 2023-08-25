@@ -5,12 +5,6 @@ import bodyParser from 'body-parser';
 import 'dotenv/config';
 import authRouter from './routes/api/auth-router.js';
 import dashboardRouter from './routes/api/dashboard-router.js';
-import express from 'express';
-import logger from 'morgan';
-import cors from 'cors';
-import 'dotenv/config';
-import authRouter from './routes/api/auth-router.js';
-import dashboardRouter from './routes/api/dashboard-router.js';
 import columnRouter from './routes/api/column-router.js';
 
 const app = express();
@@ -23,8 +17,6 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-app.use('/api/auth', authRouter);
-app.use('/api/dashboard', dashboardRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/column/', columnRouter);
