@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const dashboardAddSchema = Joi.object({
-  title: Joi.string(),
+  title: Joi.string().required(),
   icon: Joi.string(),
   columns: Joi.array(),
 });

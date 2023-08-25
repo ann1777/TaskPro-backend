@@ -1,8 +1,10 @@
-import ctrlWrapper from "../decorators/ctrlWrapper.js";
+import { ctrlWrapper } from "../decorators/index.js";
 import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
+import { HttpError } from "../helpers/index.js";
+import Dashboard from "../models/dashboard.js";
 
 const { JWT_SECRET } = process.env;
 
@@ -55,14 +57,16 @@ const signin = async (req, res) => {
     throw HttpError(401, "Email or password invalid");
   }
 
+  const owner = user._id;
+  const dashboards = await Dashboard.find({ owner });
+
   const payload = {
     id: user._id,
   };
-
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
-
   res.json({
     token,
+    dashboards,
   });
 };
 
