@@ -68,6 +68,8 @@ const signin = async (req, res) => {
     token,
     user,
     dashboards,
+    theme: user.theme,
+    avatarURL: user.avatarURL,
   });
 };
 
@@ -77,6 +79,15 @@ const signout = async (req, res) => {
 
   res.json({
     message: "Signout success",
+  });
+};
+
+const getCurrent = (req, res) => {
+  const { name, theme, avatarURL } = req.user;
+  res.json({
+    name,
+    theme,
+    avatarURL,
   });
 };
 
@@ -90,4 +101,5 @@ export default {
   signin: ctrlWrapper(signin),
   signout: ctrlWrapper(signout),
   updateTheme: ctrlWrapper(updateTheme),
+  getCurrent: ctrlWrapper(getCurrent),
 };
