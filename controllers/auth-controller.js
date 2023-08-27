@@ -79,8 +79,14 @@ const signout = async (req, res) => {
   });
 };
 
+const updateTheme = async (req, res) => {
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id, { theme }, { new: true });
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   signout: ctrlWrapper(signout),
+  updateTheme: ctrlWrapper(updateTheme),
 };
