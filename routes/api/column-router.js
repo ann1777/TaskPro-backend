@@ -1,8 +1,6 @@
 import express from "express";
 import columnSchema from "../../schemas/column-schemas.js";
 import { validateBody } from "../../decorators/index.js";
-import colunmController from "../../controllers/column-controller.js";
-
 import {
   isEmptyBody,
   isValidDashboardId,
@@ -22,13 +20,13 @@ columnRouter.post(
   isEmptyBody,
   colunmAddValidate,
   isValidDashboardId,
-  colunmController.add
+  columnController.add
 );
-columnRouter.get("/:dashboardId", isValidDashboardId, colunmController.getAll);
+columnRouter.get("/:dashboardId", isValidDashboardId, columnController.getAll);
 columnRouter.get(
   "/:dashboardId/:columnId",
   isValidColumnId,
-  colunmController.getById
+  columnController.getById
 );
 columnRouter.put(
   "/:dashboardId/:columnId",
@@ -40,7 +38,7 @@ columnRouter.put(
 columnRouter.delete(
   "/:dashboardId/:columnId",
   isValidColumnId,
-  colunmController.deleteById
+  columnController.deleteById
 );
 
 export default columnRouter;

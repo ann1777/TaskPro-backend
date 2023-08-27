@@ -24,7 +24,7 @@ const getAll = async (req, res, next) => {
     "-createdAt -updatedAt"
   ).populate("dashboardId", "title");
   if (!result) {
-    throw HttpError(404, `Column with id=${dashboardId} not found`);
+    throw HttpError(404, `Dashboard with id=${dashboardId} not found`);
   }
   res.status(201).json(result);
 };
