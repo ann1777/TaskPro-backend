@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -7,6 +7,7 @@ import 'dotenv/config';
 import authRouter from './routes/api/auth-router.js';
 import dashboardRouter from './routes/api/dashboard-router.js';
 import columnRouter from './routes/api/column-router.js';
+import cardRouter from './routes/api/card-router.js';
 import swaggerDocument from '/swagger.json';
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 app.use('/api/auth', authRouter);
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/column/', columnRouter);
+app.use('/api/card/', cardRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
