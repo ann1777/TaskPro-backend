@@ -15,35 +15,35 @@
   "tags": [
     {
       "name": "SignUp",
-      "description": "BASE_URL/auth/signup <<Registration endpoints>>"
+      "description": "Registration endpoints"
     },
     {
       "name": "SignIn",
-      "description": "BASE_URL/auth/signin <<Login endpoints>>"
+      "description": "Login endpoints"
     },
     {
       "name": "SignOut",
-      "description": "BASE_URL/auth/signout <<Logout endpoints>>"
+      "description": "Logout endpoints"
     },
     {
       "name": "Get all DASHBOARDS",
-      "description": "BASE_URL/dashboard/ <<get all DASHBOARDS, post>>"
+      "description": "Get all dashboards, post"
     },
     {
       "name": "get all COLUMNS by DashboardId",
-      "description": "BASE_URL/column/:dashboardId <<get all COLUMNS, post>>"
+      "description": "Get all columns by dashboard ID, post"
     },
     {
       "name": "Operations with COLUMNS by DashboardId",
-      "description": "BASE_URL/column/:dashboardId/:columnId <<get byID, del byID, updateByID>>"
+      "description": "Operations with columns by dashboard ID, getByID, updateByID, deleteByID"
     },
     {
       "name": "get all CARDS by ColumnId",
-      "description": "BASE_URL/card/:columnId <<get all CARDS, post>>"
+      "description": "Get all cards by column ID, post"
     },
     {
       "name": "Operations with CARDS by ColumnId",
-      "description": "Gifts endpoints"
+      "description": "Operations with cards by column ID, getByID, updateByID, deleteByID"
     }
   ],
   "paths": {
@@ -149,10 +149,323 @@
         }
       }
     },
-    "/dashboard/": {},
-    "/dashboard/:dashboard": {},
-    "/column/:dashboardID/:columnID": {},
-    "/card/columnID": {},
-    "/card/:columnID/cardID": {}
+    "/dashboard/": {
+      "get": {
+        "tags": ["Get all DASHBOARDS"],
+        "summary": "Get all dashboards",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": []
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "tags": ["Create a new DASHBOARDS"],
+        "summary": "Create a new dashboard",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Dashboard object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/schemas/dashboard-schemas.dashboardAddSchema"
+              },
+              "example": {
+                "title": "New Dashboard",
+                "icon": "dashboard-icon",
+                "columns": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful creation the new dashboard",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "dashboardId",
+                  "title": "dashboard-title",
+                  "icon": "dashboard-icon",
+                  "columns": [],
+                  "owner": "userId"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/dashboard/{dashboardID}": {
+      "get": {
+        "tags": ["get all COLUMNS by DashboardId"],
+        "summary": "Get all columns by dashboard ID",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "dashboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the dashboard I need to get all columns"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": []
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Dashboard not found",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "tags": ["add new COLUMN by DashboardId"],
+        "summary": "Create a new column under a dashboard",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "dashboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the dashboard"
+          }
+        ],
+        "requestBody": {
+          "description": "Column object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/schemas/column-schemas.columnAddSchema"
+              },
+              "example": {
+                "title": "New Column",
+                "cards": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful creation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "columnId",
+                  "title": "New Column",
+                  "cards": [],
+                  "dashboardId": "dashboardId"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Dashboard not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/column/{dashboardId}/{columnId}": {
+      "get": {
+        "tags": ["Operations with COLUMNS by DashboardId"],
+        "summary": "Get a column by ID under a dashboard",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "dashboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the dashboard"
+          },
+          {
+            "name": "columnId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the column"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "columnId",
+                  "title": "Column Title",
+                  "cards": [],
+                  "dashboardId": "dashboardId"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Column not found",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Operations with COLUMNS by DashboardId"],
+        "summary": "Delete a column by ID under a dashboard",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "dashboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the dashboard"
+          },
+          {
+            "name": "columnId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the column"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful deletion",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Column not found",
+            "content": {}
+          }
+        }
+      },
+      "put": {
+        "tags": ["Operations with COLUMNS by DashboardId"],
+        "summary": "Update a column by ID under a dashboard",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "dashboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the dashboard"
+          },
+          {
+            "name": "columnId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the column"
+          }
+        ],
+        "requestBody": {
+          "description": "Updated column object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/schemas/column-schemas.columnAddSchema"
+              },
+              "example": {
+                "title": "Updated Column Title",
+                "cards": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful update",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "columnId",
+                  "title": "Updated Column Title",
+                  "cards": [],
+                  "dashboardId": "dashboardId"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Column not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/card/{columnId}": {},
+    "/card/{columnId}/{cardId}": {}
   }
 }
