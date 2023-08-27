@@ -37,6 +37,10 @@ const userSigninResponse = Joi.object({
   dashboards: Joi.string().required(),
 });
 
+const updateProfileThemeSchema = Joi.object({
+  theme: Joi.string().valid('Light', 'Dark', 'Violet').required(),
+});
+
 const userLogoutSchema = Joi.object({
   token: Joi.string().required(),
 });
@@ -50,6 +54,7 @@ export default {
   userRegistrationResponse,
   userSignInSchema,
   userSigninResponse,
+  updateProfileThemeSchema,
   userLogoutSchema,
   userLogoutResponse,
 };

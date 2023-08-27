@@ -149,6 +149,63 @@
         }
       }
     },
+    "/auth/updateTheme": {
+      "put": {
+        "tags": ["Update App theme"],
+        "summary": "Update the theme by user ID",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the user"
+          }
+        ],
+        "requestBody": {
+          "description": "Updated theme",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/schemas/user-schemas.updateProfileThemeSchema"
+              },
+              "example": {
+                "theme": "Dark"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful update profile theme",
+            "content": {
+              "application/json": {
+                "example": {
+                  "userId": "userId",
+                  "theme": "Dark"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Column not found",
+            "content": {}
+          }
+        }
+      }
+    },
     "/dashboard/": {
       "get": {
         "tags": ["Get all DASHBOARDS"],
