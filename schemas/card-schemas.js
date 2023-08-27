@@ -20,4 +20,5 @@ export const cardUpdateSchema = Joi.object({
 
 export default {
   cardAddSchema,
+  cardUpdateSchema,
 };

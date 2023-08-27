@@ -52,8 +52,8 @@
       "description": "Operations with columns by dashboard ID, getByID, updateByID, deleteByID"
     },
     {
-      "name": "Get all CARDS by ColumnId",
-      "description": "Get all cards by column ID, get"
+      "name": "Get all CARDS by ColumnId && CardId",
+      "description": "Get all cards by column ID and card ID: getByID, updateByID, deleteByID"
     },
     {
       "name": "Operations with CARDS by ColumnId && CardId",
@@ -63,7 +63,7 @@
   "paths": {
     "/auth/signup": {
       "post": {
-        "tags": ["Signup"],
+        "tags": ["SignUp"],
         "summary": "User registration",
         "parameters": [],
         "requestBody": {
@@ -101,7 +101,7 @@
     },
     "/auth/signin": {
       "post": {
-        "tags": ["Signin"],
+        "tags": ["SignIn"],
         "summary": "User authentication",
         "parameters": [],
         "requestBody": {
@@ -757,7 +757,7 @@
   },
   "/card/{columnId}/{cardId}": {
     "get": {
-      "tags": ["Operations with CARDS by ColumnId && cardId"],
+      "tags": ["Operations with CARDS by ColumnId && CardId"],
       "summary": "Get the card by ID under a column",
       "security": [{ "Bearer": [] }],
       "parameters": [
@@ -808,7 +808,7 @@
       }
     },
     "put": {
-      "tags": ["Operations with CARDS by ColumnId && cardId"],
+      "tags": ["Operations with CARDS by ColumnId && CardId"],
       "summary": "Update a card by ID under a column",
       "security": [{ "Bearer": [] }],
       "parameters": [
@@ -879,7 +879,7 @@
       }
     },
     "delete": {
-      "tags": ["Operations with CARDS by ColumnId && cardId"],
+      "tags": ["Operations with CARDS by ColumnId && CardId"],
       "summary": "Delete a card by ID under a column",
       "security": [{ "Bearer": [] }],
       "parameters": [

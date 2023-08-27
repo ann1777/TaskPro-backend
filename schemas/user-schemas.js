@@ -16,10 +16,10 @@ const userRegistrationResponse = Joi.object({
     .pattern(emailRegexp)
     .required()
     .description("New user's email"),
-  avatar: Joi.string().description("New user's id"),
+  avatar: Joi.string(),
 });
 
-const RegistrationResponse = Joi.array()
+const RegistrationResponseExample = Joi.array()
   .items(userRegistrationResponse)
   .example([
     { email: '1@gmail.com', userId: 1, avatar: '' },
@@ -32,9 +32,9 @@ const userSignInSchema = Joi.object({
 });
 
 const userSigninResponse = Joi.object({
-  email: Joi.string().pattern(emailRegexp).required(),
   token: Joi.string().required(),
   dashboards: Joi.string().required(),
+  user: Joi.object(),
 });
 
 const updateProfileThemeSchema = Joi.object({
@@ -52,6 +52,7 @@ const userLogoutResponse = Joi.object({
 export default {
   userRegistrationSchema,
   userRegistrationResponse,
+  RegistrationResponseExample,
   userSignInSchema,
   userSigninResponse,
   updateProfileThemeSchema,
