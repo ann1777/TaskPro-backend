@@ -10,6 +10,8 @@ https://taskpro-backend-c73a.onrender.com/api <<BASE_URL>>
 BASE_URL/auth/signup <<registration>>
 BASE_URL/auth/signin <<login>>
 BASE_URL/auth/signout <<logout>>
+BASE_URL/auth/current <<curent>>
+BASE_URL/auth/update <<update name && || avatar>>
 
 BASE_URL/dashboard/ <<get all DASHBOARDS, post>>
 BASE_URL/dashboard/:dashboardId <<get byID, del byID, updateByID>>
