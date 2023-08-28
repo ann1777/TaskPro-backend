@@ -16,14 +16,25 @@ const userRegistrationResponse = Joi.object({
     .pattern(emailRegexp)
     .required()
     .description("New user's email"),
-  avatar: Joi.string(),
+  avatar: Joi.string().required(),
+  theme: Joi.string().required().default('Light'),
 });
 
 const RegistrationResponseExample = Joi.array()
   .items(userRegistrationResponse)
   .example([
-    { email: '1@gmail.com', userId: 1, avatar: '' },
-    { email: '2@gmail.com', userId: 2, avatar: '' },
+    {
+      email: '1@gmail.com',
+      userId: '64e62dfb1e7e9fe71a3812c1',
+      avatar:
+        '//www.gravatar.com/avatar/245cf079454dc9a3374a7c076de247cc?s=200&r=pg&…',
+    },
+    {
+      email: '2@gmail.com',
+      userId: '64e62e2a1e7e9fe71a3812c4',
+      avatar:
+        '//www.gravatar.com/avatar/245cf079454dc9a3374a7c076de247cc?s=200&r=pg&…',
+    },
   ]);
 
 const userSignInSchema = Joi.object({
