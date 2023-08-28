@@ -97,8 +97,9 @@ const getCurrent = (req, res) => {
 
 const updateTheme = async (req, res) => {
   const { _id } = req.user;
-  const theme = req.body.theme;
-  await User.findByIdAndUpdate(_id, { theme }, { new: true });
+  const { theme } = req.body;
+  const result = await User.findByIdAndUpdate(_id, { theme }, { new: true });
+  res.json(result);
 };
 
 const updateUser = async (req, res) => {
