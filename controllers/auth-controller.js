@@ -1,3 +1,4 @@
+
 import { ctrlWrapper } from '../decorators/index.js';
 import bcrypt from 'bcryptjs';
 import User from '../models/user.js';
@@ -5,6 +6,10 @@ import gravatar from 'gravatar';
 import jwt from 'jsonwebtoken';
 import { HttpError } from '../helpers/index.js';
 import Dashboard from '../models/dashboard.js';
+import { avatarsDir } from "../constants/user-constants.js";
+import jimp from "jimp";
+import fs from "fs/promises";
+import path from "path";
 
 const { JWT_SECRET } = process.env;
 
@@ -68,6 +73,8 @@ const signin = async (req, res) => {
     token,
     user,
     dashboards,
+    theme: user.theme,
+    avatarURL: user.avatarURL,
   });
 };
 
@@ -80,9 +87,45 @@ const signout = async (req, res) => {
   });
 };
 
+const getCurrent = (req, res) => {
+  const { name, theme, avatarURL } = req.user;
+  res.json({
+    name,
+    theme,
+    avatarURL,
+  });
+};
+
 const updateTheme = async (req, res) => {
   const { _id } = req.user;
-  await User.findByIdAndUpdate(_id, { theme }, { new: true });
+  const { theme } = req.body;
+  const result = await User.findByIdAndUpdate(_id, { theme }, { new: true });
+  res.json(result);
+};
+
+const updateUser = async (req, res) => {
+  const { name } = req.body;
+  const { path: oldPath, filename } = req.file;
+  const { _id } = req.user;
+
+  if (req.file) {
+    const image = await jimp.read(oldPath);
+    await image.cover(250, 250).writeAsync(oldPath);
+
+    const newName = `${Date.now()}-${filename}`;
+    const newPath = path.join(avatarsDir, newName);
+    await fs.rename(oldPath, newPath);
+    const avatarURL = path.join("public", avatarName);
+    const result = await User.findByIdAndUpdate(
+      _id,
+      { avatarURL, name },
+      { new: true }
+    );
+    res.json(result);
+  } else {
+    const result = await User.findByIdAndUpdate(_id, { name }, { new: true });
+    res.json(result);
+  }
 };
 
 export default {
@@ -90,4 +133,6 @@ export default {
   signin: ctrlWrapper(signin),
   signout: ctrlWrapper(signout),
   updateTheme: ctrlWrapper(updateTheme),
+  getCurrent: ctrlWrapper(getCurrent),
+  updateUser: ctrlWrapper(updateUser),
 };
