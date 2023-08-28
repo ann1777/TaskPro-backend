@@ -5,7 +5,6 @@ import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
 import { HttpError } from "../helpers/index.js";
 import Dashboard from "../models/dashboard.js";
-import { avatarsDir } from "../constants/user-constants.js";
 import jimp from "jimp";
 import fs from "fs/promises";
 import path from "path";
@@ -98,9 +97,11 @@ const getCurrent = (req, res) => {
 const updateTheme = async (req, res) => {
   const { _id } = req.user;
   const { theme } = req.body;
+  console.log(req);
   const result = await User.findByIdAndUpdate(_id, { theme }, { new: true });
   res.json(result);
 };
+export const avatarsDir = path.resolve("public", "avatars");
 
 const updateUser = async (req, res) => {
   const { name } = req.body;
