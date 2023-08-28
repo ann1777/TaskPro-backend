@@ -5,6 +5,10 @@ import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
 import { HttpError } from "../helpers/index.js";
 import Dashboard from "../models/dashboard.js";
+import { avatarsDir } from "../constants/user-constants.js";
+import jimp from "jimp";
+import fs from "fs/promises";
+import path from "path";
 
 const { JWT_SECRET } = process.env;
 
@@ -96,10 +100,36 @@ const updateTheme = async (req, res) => {
   await User.findByIdAndUpdate(_id, { theme }, { new: true });
 };
 
+const updateUser = async (req, res) => {
+  const { name } = req.body;
+  const { path: oldPath, filename } = req.file;
+  const { _id } = req.user;
+
+  if (req.file) {
+    const image = await jimp.read(oldPath);
+    await image.cover(250, 250).writeAsync(oldPath);
+
+    const newName = `${Date.now()}-${filename}`;
+    const newPath = path.join(avatarsDir, newName);
+    await fs.rename(oldPath, newPath);
+    const avatarURL = path.join("public", avatarName);
+    const result = await User.findByIdAndUpdate(
+      _id,
+      { avatarURL, name },
+      { new: true }
+    );
+    res.json(result);
+  } else {
+    const result = await User.findByIdAndUpdate(_id, { name }, { new: true });
+    res.json(result);
+  }
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   signout: ctrlWrapper(signout),
   updateTheme: ctrlWrapper(updateTheme),
   getCurrent: ctrlWrapper(getCurrent),
+  updateUser: ctrlWrapper(updateUser),
 };
