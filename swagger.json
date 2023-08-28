@@ -139,13 +139,13 @@
     },
     "/auth/signout": {
       "post": {
-        "tags": ["Logout"],
+        "tags": ["Signout"],
         "summary": "User logout",
         "security": [{ "Bearer": [] }],
         "parameters": [],
         "responses": {
           "204": {
-            "description": "Successful operation",
+            "description": "Successful user logout",
             "content": {}
           },
           "400": {
@@ -175,8 +175,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID of the user"
+            }
           }
         ],
         "requestBody": {
@@ -186,9 +185,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/schemas/user-schemas.updateProfileThemeSchema"
-              },
-              "example": {
-                "theme": "Dark"
               }
             }
           }
@@ -199,7 +195,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "userId": "userId",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
                   "theme": "Dark"
                 }
               }
@@ -227,7 +223,7 @@
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful response user dashboards",
             "content": {
               "application/json": {
                 "example": [
