@@ -6,7 +6,6 @@ import { HttpError } from "../helpers/index.js";
 const add = async (req, res, next) => {
   const { columnId } = req.params;
   const column = await Column.findById(columnId);
-  console.log(column);
   const dashboardId = column.dashboardId;
   const result = await Card.create({ ...req.body, columnId, dashboardId });
   res.status(201).json(result);

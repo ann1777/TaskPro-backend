@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
-import { HttpError } from "../helpers/index.js";
+import { HttpError, handleGetDashboardsData } from "../helpers/index.js";
 import Dashboard from "../models/dashboard.js";
 import jimp from "jimp";
 import fs from "fs/promises";
@@ -51,7 +51,6 @@ const signin = async (req, res) => {
   if (!user) {
     throw HttpError(401, "Email or password invalid");
   }
-  // console.log(user);
   // if (!user.verify) {
   //   throw HttpError(401, "Email not verify");
   // }
@@ -61,18 +60,18 @@ const signin = async (req, res) => {
   }
 
   const owner = user._id;
-  const dashboards = await Dashboard.find({ owner });
-
+  const dashboards = await handleGetDashboardsData(owner);
   const payload = {
     id: user._id,
   };
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
+  const { name, theme, avatarURL } = user;
   res.json({
     token,
-    user,
+    name,
+    theme,
+    avatarURL,
     dashboards,
-    theme: user.theme,
-    avatarURL: user.avatarURL,
   });
 };
 
@@ -85,12 +84,14 @@ const signout = async (req, res) => {
   });
 };
 
-const getCurrent = (req, res) => {
-  const { name, theme, avatarURL } = req.user;
+const getCurrent = async (req, res) => {
+  const { name, theme, avatarURL, _id: owner } = req.user;
+  const dashboards = await handleGetDashboardsData(owner);
   res.json({
     name,
     theme,
     avatarURL,
+    dashboards,
   });
 };
 
@@ -120,7 +121,9 @@ const updateUser = async (req, res) => {
     const avatarURL = path.join("public", "avatars", newName);
     updatedData.avatarURL = avatarURL;
   }
-  console.log(updatedData);
+  if (!name && !req.file) {
+    throw HttpError(400, "Updated data is required");
+  }
   const result = await User.findByIdAndUpdate(
     _id,
     { ...updatedData },
