@@ -1,20 +1,15 @@
-import { ctrlWrapper } from '../decorators/index.js';
+import jimp from 'jimp';
+import fs from 'fs/promises';
+import path from 'path';
 import bcrypt from 'bcryptjs';
-import User from '../models/user.js';
 import gravatar from 'gravatar';
 import jwt from 'jsonwebtoken';
+
+import { ctrlWrapper } from '../decorators/index.js';
+import User from '../models/user.js';
 import { HttpError } from '../helpers/index.js';
 import Dashboard from '../models/dashboard.js';
-import { ctrlWrapper } from "../decorators/index.js";
-import bcrypt from "bcryptjs";
-import User from "../models/user.js";
-import gravatar from "gravatar";
-import jwt from "jsonwebtoken";
-import { HttpError } from "../helpers/index.js";
-import Dashboard from "../models/dashboard.js";
-import jimp from "jimp";
-import fs from "fs/promises";
-import path from "path";
+import { avatarsDir } from '../constants/user-constants.js';
 
 const { JWT_SECRET } = process.env;
 
@@ -88,7 +83,7 @@ const signout = async (req, res) => {
   await User.findByIdAndUpdate(_id, { token: '' });
 
   res.json({
-    message: "Signout success",
+    message: 'Signout success',
   });
 };
 
@@ -108,7 +103,7 @@ const updateTheme = async (req, res) => {
   const result = await User.findByIdAndUpdate(_id, { theme }, { new: true });
   res.json(result);
 };
-export const avatarsDir = path.resolve("public", "avatars");
+export const avatarsDir = path.resolve('public', 'avatars');
 
 const updateUser = async (req, res) => {
   const { name } = req.body;
@@ -122,7 +117,7 @@ const updateUser = async (req, res) => {
     const newName = `${Date.now()}-${filename}`;
     const newPath = path.join(avatarsDir, newName);
     await fs.rename(oldPath, newPath);
-    const avatarURL = path.join("public", avatarName);
+    const avatarURL = path.join('public', avatarName);
     const result = await User.findByIdAndUpdate(
       _id,
       { avatarURL, name },
