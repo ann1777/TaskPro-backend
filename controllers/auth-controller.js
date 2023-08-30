@@ -3,7 +3,11 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
-import { HttpError, handleGetDashboardsData } from "../helpers/index.js";
+import {
+  HttpError,
+  handleGetDashboardsData,
+  sendEmail,
+} from "../helpers/index.js";
 import Dashboard from "../models/dashboard.js";
 import jimp from "jimp";
 import fs from "fs/promises";
@@ -69,6 +73,7 @@ const signin = async (req, res) => {
   res.json({
     token,
     name,
+    email,
     theme,
     avatarURL,
     dashboards,
@@ -85,10 +90,11 @@ const signout = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-  const { name, theme, avatarURL, _id: owner } = req.user;
+  const { name, theme, avatarURL, _id: owner, email } = req.user;
   const dashboards = await handleGetDashboardsData(owner);
   res.json({
     name,
+    email,
     theme,
     avatarURL,
     dashboards,
@@ -134,6 +140,26 @@ const updateUser = async (req, res) => {
   res.json(result);
 };
 
+const sendHelpEmail = async (req, res) => {
+  const { comment, email } = req.body;
+  const { _id } = req.user;
+  const user = await User.findOne({ _id });
+  if (!user) {
+    throw HttpError(404, "Email not found");
+  }
+  const userMail = email ? email : user.email;
+  const mail = {
+    to: "taskpro.project@gmail.com",
+    subject: `User ${_id} needs help`,
+    html: `<h5>userName: ${user.name} , userEmail: ${userMail} </h5>
+    <p>userComment: ${comment}</p>`,
+  };
+  await sendEmail(mail);
+
+  res.json({
+    message: "Your mail has been sent",
+  });
+};
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
@@ -141,4 +167,5 @@ export default {
   updateTheme: ctrlWrapper(updateTheme),
   getCurrent: ctrlWrapper(getCurrent),
   updateUser: ctrlWrapper(updateUser),
+  sendHelpEmail: ctrlWrapper(sendHelpEmail),
 };
