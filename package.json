@@ -37,7 +37,9 @@
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "5.2.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "swagger-ui": "^5.4.2",
+    "swagger-ui-express": "^5.0.0"
   },
   "license": "MIT"
 }
