@@ -1,0 +1,2 @@
+# your YAML here
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
