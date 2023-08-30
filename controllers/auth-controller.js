@@ -99,18 +99,20 @@ const getCurrent = (req, res) => {
 const updateTheme = async (req, res) => {
   const { _id } = req.user;
   const { theme } = req.body;
-  console.log(req);
   const result = await User.findByIdAndUpdate(_id, { theme }, { new: true });
   res.json(result);
 };
 export const avatarsDir = path.resolve('public', 'avatars');
 
 const updateUser = async (req, res) => {
-  const { name } = req.body;
-  const { path: oldPath, filename } = req.file;
   const { _id } = req.user;
-
+  const { name } = req.body;
+  const updatedData = {};
+  if (name) {
+    updatedData.name = name;
+  }
   if (req.file) {
+    const { path: oldPath, filename } = req.file;
     const image = await jimp.read(oldPath);
     await image.cover(250, 250).writeAsync(oldPath);
 
@@ -128,7 +130,18 @@ const updateUser = async (req, res) => {
     const result = await User.findByIdAndUpdate(_id, { name }, { new: true });
     res.json(result);
   }
+  const avatarURL = path.join('public', 'avatars', newName);
+  updatedData.avatarURL = avatarURL;
 };
+console.log(updatedData);
+const result = await User.findByIdAndUpdate(
+  _id,
+  { ...updatedData },
+  {
+    new: true,
+  }
+);
+res.json(result);
 
 export default {
   signup: ctrlWrapper(signup),
