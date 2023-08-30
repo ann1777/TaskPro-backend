@@ -13,10 +13,10 @@ const dashboard = new Schema(
     background: {
       type: String,
     },
-    columns: {
-      type: [Schema.Types.ObjectId],
-      ref: "column",
-    },
+    // columns: {
+    //   type: [Schema.Types.ObjectId],
+    //   ref: "column",
+    // },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user",

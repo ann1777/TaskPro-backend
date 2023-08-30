@@ -29,5 +29,11 @@ authRouter.put(
   upload.single("avatar"),
   authController.updateUser
 );
+authRouter.post(
+  "/help",
+  isEmptyBody,
+  authenticate,
+  authController.sendHelpEmail
+);
 
 export default authRouter;
