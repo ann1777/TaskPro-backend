@@ -1,16 +1,16 @@
-import express from 'express';
-import dashboardSchema from '../../schemas/dashboard-schemas.js';
-import dashboardController from '../../controllers/dashboard-controller.js';
-import { validateBody } from '../../decorators/index.js';
+import express from "express";
+import dashboardSchema from "../../schemas/dashboard-schemas.js";
+import dashboardController from "../../controllers/dashboard-controller.js";
+import { validateBody } from "../../decorators/index.js";
 
-import User from '../../models/user.js';
+import User from "../../models/user.js";
 import {
   isEmptyBody,
   isValidDashboardId,
   authenticate,
   upload,
-} from '../../middlewares/index.js';
-import { google } from 'googleapis';
+} from "../../middlewares/index.js";
+import { google } from "googleapis";
 
 const dashboardRouter = express.Router();
 
@@ -20,35 +20,35 @@ const { GMAIL_API_CLIENT_ID, BASE_URL } = process.env;
 
 const oAuth2Client = new google.auth.OAuth2(
   GMAIL_API_CLIENT_ID,
-  '',
+  "",
   `${BASE_URL}/auth-callback`
 );
-const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
+const SCOPES = ["https://www.googleapis.com/auth/gmail.send"];
 
 dashboardRouter.use(authenticate);
 
-dashboardRouter.get('/', dashboardController.getAll);
+dashboardRouter.get("/", dashboardController.getAll);
 
 dashboardRouter.get(
-  '/:dashboardId',
+  "/:dashboardId",
   isValidDashboardId,
   dashboardController.getById
 );
 
 dashboardRouter.post(
-  '/',
+  "/",
   isEmptyBody,
   dashboardAddValidate,
   dashboardController.add
 );
 
 dashboardRouter.delete(
-  '/:dashboardId',
+  "/:dashboardId",
   isValidDashboardId,
   dashboardController.deleteById
 );
 dashboardRouter.put(
-  '/:dashboardId',
+  "/:dashboardId",
   isValidDashboardId,
   isEmptyBody,
   dashboardAddValidate,
@@ -56,7 +56,7 @@ dashboardRouter.put(
 );
 
 dashboardRouter.post(
-  '/helpMail',
+  "/helpMail",
   isEmptyBody,
   dashboardAddValidate,
   dashboardController.helpMail

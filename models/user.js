@@ -22,11 +22,13 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
+      required: [true, "Set avatarURL for user"],
     },
     theme: {
       type: String,
       enum: ["light", "color", "dark"],
       default: "light",
+      required: [true, "Set theme for user"],
     },
   },
   { versionKey: false, timestamps: true }
