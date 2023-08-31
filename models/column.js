@@ -12,10 +12,10 @@ const column = new Schema(
       ref: "dashboard",
       required: true,
     },
-    cards: {
-      type: [Schema.Types.ObjectId],
-      ref: "card",
-    },
+    // cards: {
+    //   type: [Schema.Types.ObjectId],
+    //   ref: "card",
+    // },
   },
   { versionKey: false, timestamps: true }
 );

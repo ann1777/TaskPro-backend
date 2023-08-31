@@ -10,6 +10,13 @@ import User from '../models/user.js';
 import { HttpError } from '../helpers/index.js';
 import Dashboard from '../models/dashboard.js';
 import { avatarsDir } from '../constants/user-constants.js';
+import Dashboard from '../models/dashboard.js';
+import User from '../models/user.js';
+import {
+  HttpError,
+  handleGetDashboardsData,
+  sendEmail,
+} from '../helpers/index.js';
 
 const { JWT_SECRET } = process.env;
 
@@ -53,7 +60,6 @@ const signin = async (req, res) => {
   if (!user) {
     throw HttpError(401, 'Email or password invalid');
   }
-  // console.log(user);
   // if (!user.verify) {
   //   throw HttpError(401, "Email not verify");
   // }
@@ -63,18 +69,19 @@ const signin = async (req, res) => {
   }
 
   const owner = user._id;
-  const dashboards = await Dashboard.find({ owner });
-
+  const dashboards = await handleGetDashboardsData(owner);
   const payload = {
     id: user._id,
   };
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '23h' });
+  const { name, theme, avatarURL } = user;
   res.json({
     token,
-    user,
+    name,
+    email,
+    theme,
+    avatarURL,
     dashboards,
-    theme: user.theme,
-    avatarURL: user.avatarURL,
   });
 };
 
@@ -87,12 +94,15 @@ const signout = async (req, res) => {
   });
 };
 
-const getCurrent = (req, res) => {
-  const { name, theme, avatarURL } = req.user;
+const getCurrent = async (req, res) => {
+  const { name, theme, avatarURL, _id: owner, email } = req.user;
+  const dashboards = await handleGetDashboardsData(owner);
   res.json({
     name,
+    email,
     theme,
     avatarURL,
+    dashboards,
   });
 };
 
@@ -142,7 +152,30 @@ const result = await User.findByIdAndUpdate(
   }
 );
 res.json(result);
+if (!name && !req.file) {
+  throw HttpError(400, 'Updated data is required');
+}
 
+const sendHelpEmail = async (req, res) => {
+  const { comment, email } = req.body;
+  const { _id } = req.user;
+  const user = await User.findOne({ _id });
+  if (!user) {
+    throw HttpError(404, 'Email not found');
+  }
+  const userMail = email ? email : user.email;
+  const mail = {
+    to: 'taskpro.project@gmail.com',
+    subject: `User ${_id} needs help`,
+    html: `<h5>userName: ${user.name} , userEmail: ${userMail} </h5>
+    <p>userComment: ${comment}</p>`,
+  };
+  await sendEmail(mail);
+
+  res.json({
+    message: 'Your mail has been sent',
+  });
+};
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
@@ -150,4 +183,5 @@ export default {
   updateTheme: ctrlWrapper(updateTheme),
   getCurrent: ctrlWrapper(getCurrent),
   updateUser: ctrlWrapper(updateUser),
+  sendHelpEmail: ctrlWrapper(sendHelpEmail),
 };
