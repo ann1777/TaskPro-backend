@@ -5,17 +5,13 @@ const column = new Schema(
   {
     title: {
       type: String,
-      required: [true, "Set name for column"],
+      required: [true, "Set title for column"],
     },
     dashboardId: {
       type: Schema.Types.ObjectId,
       ref: "dashboard",
       required: true,
     },
-    // cards: {
-    //   type: [Schema.Types.ObjectId],
-    //   ref: "card",
-    // },
   },
   { versionKey: false, timestamps: true }
 );

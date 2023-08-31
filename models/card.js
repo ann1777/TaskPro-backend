@@ -5,13 +5,14 @@ const card = new Schema(
   {
     title: {
       type: String,
-      required: [true, "Set name for column"],
+      required: [true, "Set title for card"],
     },
     description: {
       type: String,
     },
     priority: {
       type: String,
+      required: [true, "Set priority for card"],
     },
     deadline: {
       type: String,
