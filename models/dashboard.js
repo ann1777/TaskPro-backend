@@ -9,9 +9,11 @@ const dashboard = new Schema(
     },
     icon: {
       type: String,
+      required: [true, "Set iconURL for dashboard"],
     },
     background: {
       type: String,
+      required: [true, "Set backgroundURL for dashboard"],
     },
     // columns: {
     //   type: [Schema.Types.ObjectId],
