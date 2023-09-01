@@ -24,13 +24,13 @@ app.use("/api/auth", authRouter);
 app.use("/api/dashboard", dashboardRouter);
 app.use("/api/column/", columnRouter);
 app.use("/api/card/", cardRouter);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
 
-app.use("/privacy-policy", (req, res) => {
+app.use("/api/privacy-policy", (req, res) => {
   res.sendFile(path.join(__dirname, "../../public/privacy-policy.html"));
 });
 
