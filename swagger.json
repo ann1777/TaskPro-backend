@@ -230,8 +230,7 @@
                   {
                     "title": "New Dashboard",
                     "icon": "dashboard-icon",
-                    "columns": [],
-                    "active": true
+                    "background": "./public/test"
                   },
                   {}
                 ]
@@ -259,7 +258,7 @@
               "example": {
                 "title": "New Dashboard",
                 "icon": "dashboard-icon",
-                "columns": []
+                "background": "https://res.cloudinary.com/doc0gvy9u/image/upload/v1692832134/fon2_ico_n8gegc.png"
               }
             }
           }
@@ -273,6 +272,7 @@
                   "_id": "dashboardId",
                   "title": "dashboard-title",
                   "icon": "dashboard-icon",
+                  "background": null,
                   "columns": [],
                   "theme": "Light",
                   "owner": "userId"
@@ -371,10 +371,12 @@
             "content": {
               "application/json": {
                 "example": {
-                  "_id": "columnId",
+                  "_id": "64e76b0b183db6758d58acd5",
                   "title": "In progress",
+                  "dashboardId": "64e71fe59298e26b8c2a391f",
                   "cards": [],
-                  "dashboardId": "{dashboardId}"
+                  "createdAt": "2023-08-24T14:36:59.690+00:00",
+                  "updatedAt": "2023-08-24T18:48:57.066+00:00"
                 }
               }
             }
@@ -456,10 +458,12 @@
           "content": {
             "application/json": {
               "example": {
-                "_id": "columnId",
-                "title": "Column Title",
+                "_id": "64e7798d77846d54f93e2a05",
+                "title": "testColumn 4",
                 "cards": [{}],
-                "dashboardId": "dashboardId"
+                "dashboardId": "64e71fe59298e26b8c2a391f",
+                "createdAt": "2023-08-24T14:36:59.690+00:00",
+                "updatedAt": "2023-08-24T18:48:57.066+00:00"
               }
             }
           }
