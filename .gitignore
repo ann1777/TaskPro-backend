@@ -90,6 +90,7 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+swagger-ui/dist
 
 # Gatsby files
 .cache/
