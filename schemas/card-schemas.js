@@ -14,7 +14,7 @@ export const cardUpdateSchema = Joi.object({
   description: Joi.string(),
   priority: Joi.string().required(),
   deadline: Joi.string(),
-  columnId: Joi.string().required(),
+  columnId: Joi.string(),
 });
 
 export default {

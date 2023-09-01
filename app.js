@@ -10,6 +10,7 @@ import columnRouter from "./routes/api/column-router.js";
 import cardRouter from "./routes/api/card-router.js";
 import swaggerDocument from "./swagger.json " assert { type: "json" };
 
+
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
