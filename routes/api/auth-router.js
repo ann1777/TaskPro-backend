@@ -23,6 +23,12 @@ authRouter.put(
   userUpdateData,
   authController.updateData
 );
+authRouter.put(
+  "/updatetheme",
+  authenticate,
+  isEmptyBody,
+  authController.updateTheme
+);
 
 authRouter.get("/current", authenticate, authController.getCurrent);
 authRouter.put(
