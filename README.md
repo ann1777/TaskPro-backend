@@ -13,6 +13,8 @@ BASE_URL/auth/signout <<logout>>
 BASE_URL/auth/current <<curent>>
 BASE_URL/auth/updatedata <<update name && || avatar(cloud)>>
 BASE_URL/auth/update <<update name && || avatar (backend)>>
+BASE_URL/auth/updatetheme <<update theme>>
+BASE_URL/auth/help <<send help message >>
 
 BASE_URL/dashboard/ <<get all DASHBOARDS, post>>
 BASE_URL/dashboard/:dashboardId <<get byID, del byID, updateByID>>

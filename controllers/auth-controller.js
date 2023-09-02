@@ -89,6 +89,13 @@ const getCurrent = async (req, res) => {
   });
 };
 
+const updateTheme = async (req, res) => {
+  const { _id } = req.user;
+  const { theme } = req.body;
+  const result = await User.findByIdAndUpdate(_id, { theme }, { new: true });
+  res.json(result);
+};
+
 const updateData = async (req, res) => {
   const { _id } = req.user;
   const { avatarURL, name } = req.body;
@@ -106,6 +113,7 @@ const updateData = async (req, res) => {
   );
   res.json(result);
 };
+
 export const avatarsDir = path.resolve("public", "avatars");
 
 const updateUser = async (req, res) => {
@@ -163,8 +171,9 @@ export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   signout: ctrlWrapper(signout),
-  updateData: ctrlWrapper(updateData),
+  updateTheme: ctrlWrapper(updateTheme),
   getCurrent: ctrlWrapper(getCurrent),
   updateUser: ctrlWrapper(updateUser),
   sendHelpEmail: ctrlWrapper(sendHelpEmail),
+  updateData: ctrlWrapper(updateData),
 };
