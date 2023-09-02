@@ -8,7 +8,6 @@ import {
   handleGetDashboardsData,
   sendEmail,
 } from "../helpers/index.js";
-import Dashboard from "../models/dashboard.js";
 import jimp from "jimp";
 import fs from "fs/promises";
 import path from "path";
@@ -25,23 +24,12 @@ const signup = async (req, res) => {
   const hashPassword = await bcrypt.hash(password, 10);
 
   const avatarURL = gravatar.url(email, { s: "200", r: "pg", d: "identicon" });
-  // const verificationCode = nanoid();
 
   const newUser = await User.create({
     ...req.body,
     password: hashPassword,
     avatarURL,
-    // verificationCode,
   });
-
-  // const verifyEmail = {
-  //   to: email,
-  //   subject: "Verify email",
-  //   html: `<a href="${BASE_URL}/api/auth/verify/${verificationCode}" target="_blank">Click verify email</a>`,
-  // };
-
-  // await sendEmail(verifyEmail);
-
   res.status(201).json({
     name: newUser.name,
     email: newUser.email,
@@ -101,10 +89,21 @@ const getCurrent = async (req, res) => {
   });
 };
 
-const updateTheme = async (req, res) => {
+const updateData = async (req, res) => {
   const { _id } = req.user;
-  const { theme } = req.body;
-  const result = await User.findByIdAndUpdate(_id, { theme }, { new: true });
+  const { avatarURL, name } = req.body;
+  const newData = {};
+  if (avatarURL) {
+    newData.avatarURL = avatarURL;
+  }
+  if (name) {
+    newData.name = name;
+  }
+  const result = await User.findByIdAndUpdate(
+    _id,
+    { ...newData },
+    { new: true }
+  );
   res.json(result);
 };
 export const avatarsDir = path.resolve("public", "avatars");
@@ -164,7 +163,7 @@ export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   signout: ctrlWrapper(signout),
-  updateTheme: ctrlWrapper(updateTheme),
+  updateData: ctrlWrapper(updateData),
   getCurrent: ctrlWrapper(getCurrent),
   updateUser: ctrlWrapper(updateUser),
   sendHelpEmail: ctrlWrapper(sendHelpEmail),

@@ -11,8 +11,8 @@ BASE_URL/auth/signup <<registration>>
 BASE_URL/auth/signin <<login>>
 BASE_URL/auth/signout <<logout>>
 BASE_URL/auth/current <<curent>>
-BASE_URL/auth/updateTheme <<update Theme>>
-BASE_URL/auth/update <<update name && || avatar>>
+BASE_URL/auth/updatedata <<update name && || avatar(cloud)>>
+BASE_URL/auth/update <<update name && || avatar (backend)>>
 
 BASE_URL/dashboard/ <<get all DASHBOARDS, post>>
 BASE_URL/dashboard/:dashboardId <<get byID, del byID, updateByID>>

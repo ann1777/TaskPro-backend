@@ -4,7 +4,6 @@ import { validateBody } from "../../decorators/index.js";
 import cardController from "../../controllers/card-controller.js";
 import {
   isEmptyBody,
-  isValidDashboardId,
   authenticate,
   isValidColumnId,
   isValidCardId,

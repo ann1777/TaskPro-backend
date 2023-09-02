@@ -52,51 +52,10 @@ const updateById = async (req, res) => {
   res.json(result);
 };
 
-const helpMail = async (req, res) => {
-  const { base64EncodedEmail, comment } = req.body;
-
-  if (!base64EncodedEmail) {
-    return res.status(400).json({ error: "Email content is missing" });
-  }
-
-  try {
-    const { token } = req.user;
-
-    const oAuth2Client = new google.auth.OAuth2(
-      GMAIL_API_CLIENT_ID,
-      "",
-      `${BASE_URL}/auth-callback`
-    );
-
-    oAuth2Client.setCredentials(token);
-
-    const mailOptions = {
-      from: "bc52node@gmail.com",
-      to: "taskpro.project@gmail.com",
-      subject: "Help Request",
-      text: `User Email: bc52node@gmail.com\nComment: ${comment}`,
-    };
-    const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
-    const response = await gmail.users.messages.send({
-      userId: "me",
-      resource: {
-        raw: base64EncodedEmail,
-        mailOptions,
-      },
-    });
-    // console.log("Email sent:", response.data);
-    res.json({ message: "Email sent successfully" });
-  } catch (error) {
-    // console.error("Error sending email:", error);
-    res.status(500).json({ error: "Failed to send email" });
-  }
-};
-
 export default {
   getAll: ctrlWrapper(getAll),
   getById: ctrlWrapper(getById),
   updateById: ctrlWrapper(updateById),
   deleteById: ctrlWrapper(deleteById),
   add: ctrlWrapper(add),
-  helpMail: ctrlWrapper(helpMail),
 };
