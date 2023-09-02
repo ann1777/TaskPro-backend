@@ -55,11 +55,4 @@ dashboardRouter.put(
   dashboardController.updateById
 );
 
-dashboardRouter.post(
-  "/helpMail",
-  isEmptyBody,
-  dashboardAddValidate,
-  dashboardController.helpMail
-);
-
 export default dashboardRouter;

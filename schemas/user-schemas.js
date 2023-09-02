@@ -11,5 +11,9 @@ const userLogInSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
 });
+const userUpdateData = Joi.object({
+  name: Joi.string(),
+  avatarURL: Joi.string(),
+});
 
-export default { userRegistrationSchema, userLogInSchema };
+export default { userRegistrationSchema, userLogInSchema, userUpdateData };

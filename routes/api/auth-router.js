@@ -8,6 +8,7 @@ const authRouter = express.Router();
 
 const userSignUpValidate = validateBody(userSchemas.userRegistrationSchema);
 const userSignInValidate = validateBody(userSchemas.userLogInSchema);
+const userUpdateData = validateBody(userSchemas.userUpdateData);
 
 authRouter.post("/signup", userSignUpValidate, authController.signup);
 
@@ -16,10 +17,11 @@ authRouter.post("/signin", userSignInValidate, authController.signin);
 authRouter.post("/signout", authenticate, authController.signout);
 
 authRouter.put(
-  "/updateTheme",
+  "/updatedata",
   authenticate,
   isEmptyBody,
-  authController.updateTheme
+  userUpdateData,
+  authController.updateData
 );
 
 authRouter.get("/current", authenticate, authController.getCurrent);
