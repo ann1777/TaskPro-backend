@@ -145,20 +145,7 @@
         "parameters": [],
         "responses": {
           "204": {
-            "description": "Successful user logout",
-            "content": {
-              "application/json": {
-                "example": [
-                  {
-                    "title": "New Dashboard",
-                    "icon": "dashboard-icon",
-                    "columns": [],
-                    "active": true
-                  },
-                  {}
-                ]
-              }
-            }
+            "description": "Successful user logout"
           },
           "400": {
             "description": "No token provided",
