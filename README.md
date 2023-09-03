@@ -74,3 +74,8 @@ BASE_URL/column/:dashboardId/:columnId <<get byID, del byID, updateByID>>
 
 BASE_URL/card/:columnId <<get all CARDS, post>>
 BASE_URL/card/:columnId/:cardId <<get byID, del byID, updateByID>>
+
+## Our "JustDoIt" team backend-developers
+
+- [▶️ **Backend-end developer:** Dmytro Komurko](https://www.linkedin.com/in/dmytro-komurko-5075a8194)
+- [▶️ **Backend-end developer:** Angela Potapchuk](https://www.linkedin.com/in/angela-potapchuk/)
