@@ -20,11 +20,11 @@
       "description": "Login endpoints"
     },
     {
-      "name": "SignOut",
+      "name": "Signout",
       "description": "Logout endpoints"
     },
     {
-      "name": "updateTheme",
+      "name": "Update App theme",
       "description": "UpdateTheme theme endpoints"
     },
     {
@@ -36,7 +36,7 @@
       "description": "Create dashboard, post"
     },
     {
-      "name": "get all COLUMNS by DashboardId",
+      "name": "Get all COLUMNS by DashboardId",
       "description": "Get all columns by dashboard ID, get"
     },
     {
@@ -52,12 +52,8 @@
       "description": "Operations with columns by dashboard ID, getByID, updateByID, deleteByID"
     },
     {
-      "name": "Get all CARDS by ColumnId && CardId",
-      "description": "Get all cards by column ID and card ID: getByID, updateByID, deleteByID"
-    },
-    {
-      "name": "Operations with CARDS by ColumnId && CardId",
-      "description": "Operations with cards by column ID: getByID, updateByID, deleteByID"
+      "name": "Operations with CARDS by ColumnId",
+      "description": "Get all cards by columnID, get"
     }
   ],
   "paths": {
@@ -72,7 +68,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/schemas/user-schemas.userRegistrationSchema"
+                "$ref": "#"
               }
             }
           }
@@ -110,7 +106,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/schemas/user-schemas.userSignInSchema"
+                "$ref": "#"
               }
             }
           }
@@ -121,7 +117,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/schemas/user-schemas.userSigninResponse"
+                  "$ref": "#"
                 }
               }
             }
@@ -183,7 +179,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/schemas/user-schemas.updateProfileThemeSchema"
+                "$ref": "#"
               }
             }
           }
@@ -292,7 +288,7 @@
     },
     "/dashboard/{dashboardID}": {
       "get": {
-        "tags": ["get all COLUMNS by DashboardId"],
+        "tags": ["Get all COLUMNS by DashboardId"],
         "summary": "Get all columns by dashboard ID",
         "security": [{ "Bearer": [] }],
         "parameters": [
@@ -326,7 +322,7 @@
         }
       },
       "post": {
-        "tags": ["Add new COLUMN by DashboardId"],
+        "tags": ["Create new COLUMN by DashboardId"],
         "summary": "Create a new column under a dashboard",
         "security": [{ "Bearer": [] }],
         "parameters": [
@@ -425,7 +421,7 @@
     },
     "/column/{dashboardId}/{columnId}": {
       "get": {
-        "tags": ["Operations with COLUMNS by DashboardId && columnId"],
+        "tags": ["Operations with COLUMN by DashboardId"],
         "summary": "Get all cards by columnID under a dashboard",
         "security": [{ "Bearer": [] }],
         "parameters": [
@@ -473,8 +469,8 @@
         }
       },
       "put": {
-        "tags": ["Operations with COLUMNS by DashboardId && columnId"],
-        "summary": "Update a column by ID under a dashboard",
+        "tags": ["Operations with COLUMN by DashboardId"],
+        "summary": "Update a column by columnID under a dashboard",
         "security": [{ "Bearer": [] }],
         "parameters": [
           {
@@ -552,8 +548,8 @@
         }
       },
       "delete": {
-        "tags": ["Operations with columnId"],
-        "summary": "Delete a column by ID under a dashboard",
+        "tags": ["Operations with COLUMN by DashboardId"],
+        "summary": "Delete a column by columnID under a dashboard",
         "security": [{ "Bearer": [] }],
         "parameters": [
           {
@@ -638,7 +634,7 @@
         }
       },
       "post": {
-        "tags": ["Add new CARD by ColumnId"],
+        "tags": ["Operations with CARDS by ColumnId"],
         "summary": "Create a new card under the column",
         "security": [{ "Bearer": [] }],
         "parameters": [
@@ -831,7 +827,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/schemas/card-schemas.updatedCardSchema"
+                "$ref": "#"
               },
               "example": {
                 "_id": "cardId",
