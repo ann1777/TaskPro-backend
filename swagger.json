@@ -68,7 +68,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#"
+                "$ref": "#/schemas/user-schemas.userRegistrationSchema"
               }
             }
           }
@@ -106,7 +106,16 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#"
+                "email": {
+                  "type": "string",
+                  "pattern": "emailRegexp",
+                  "required": "true"
+                },
+                "password": {
+                  "type": "string",
+                  "min": "6",
+                  "required": "true"
+                }
               }
             }
           }
@@ -117,7 +126,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#"
+                  "token": {
+                    "type": "string",
+                    "required": "true"
+                  },
+                  "dashboards": {
+                    "type": "string",
+                    "required": "true"
+                  },
+                  "user": {
+                    "type": "Object"
+                  }
                 }
               }
             }
@@ -179,7 +198,11 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#"
+                "theme": {
+                  "type": "string",
+                  "enum": ["light", "dark", "violet"],
+                  "required": "true"
+                }
               }
             }
           }
