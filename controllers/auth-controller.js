@@ -93,7 +93,7 @@ const updateTheme = async (req, res) => {
   const { _id } = req.user;
   const { theme } = req.body;
   const result = await User.findByIdAndUpdate(_id, { theme }, { new: true });
-  res.json(result);
+  res.json(theme);
 };
 
 const updateData = async (req, res) => {
@@ -111,7 +111,7 @@ const updateData = async (req, res) => {
     { ...newData },
     { new: true }
   );
-  res.json(result);
+  res.json({ name, email, avatarURL });
 };
 
 export const avatarsDir = path.resolve("public", "avatars");
@@ -144,7 +144,7 @@ const updateUser = async (req, res) => {
       new: true,
     }
   );
-  res.json(result);
+  res.json({ name, email, avatarURL });
 };
 
 const sendHelpEmail = async (req, res) => {
