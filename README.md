@@ -1,14 +1,16 @@
 # TaskPro-backend
 
-This is a link to the Project Layout: [![Figma](https://www.figma.com/file/yRrel7KUKlBkO3pYa7kWqR/QuizMaster?type=design&node-id=0%3A1&mode=design&t=eavwxuklWNZuRV15-1)
-This is a link to the Project terms of reference: [![Requirements](https://docs.google.com/spreadsheets/d/1zaiiXTcm5e26T-sU9FoVuSzqlTsONBt4GrHaTGhgsKo/edit?usp=sharing)
-This is a link to the Project frontend repository: [![Vercel App](https://task-pro-frontend.vercel.app/)]
-This is a link to the Project frontend deploy page: [![Vercel App](https://task-pro-frontend.vercel.app/)]
-This is a link to the Project backend deploy page: [![Render](https://dashboard.render.com/web/srv-cjitbvfjbvhs73clv0fg/deploys/dep-cjqaig0cfp5c73ejq4g0)
-
 ## Project Overview
 
 This project implements the server-side component of the TaskPro application. It is built on Node.js, utilizing the Express.js framework to implement the API and Mongoose for interacting with the MongoDB database.
+
+## References
+
+This is a link to the Project Layout: [![Figma](https://www.figma.com/file/yRrel7KUKlBkO3pYa7kWqR/QuizMaster?type=design&node-id=0%3A1&mode=design&t=eavwxuklWNZuRV15-1)
+This is a link to the Project terms of reference: [![Requirements](https://docs.google.com/spreadsheets/d/1zaiiXTcm5e26T-sU9FoVuSzqlTsONBt4GrHaTGhgsKo/edit?usp=sharing)
+This is a link to the Project frontend repository: [![GitHub Frontend part](https://github.com/ann1777/TaskPro-frontend)]
+This is a link to the Project frontend deploy page: [![Vercel App](https://task-pro-frontend.vercel.app/)]
+This is a link to the Project backend deploy page: [![Render](https://dashboard.render.com/web/srv-cjitbvfjbvhs73clv0fg/deploys/dep-cjqaig0cfp5c73ejq4g0)
 
 ## Technologies Used
 
@@ -75,7 +77,7 @@ BASE_URL/column/:dashboardId/:columnId <<get byID, del byID, updateByID>>
 BASE_URL/card/:columnId <<get all CARDS, post>>
 BASE_URL/card/:columnId/:cardId <<get byID, del byID, updateByID>>
 
-## Our "JustDoIt" team backend-developers
+## Our "JustDoIt" team back-end developers
 
-- [▶️ **Backend developer:** Dmytro Komurko](https://www.linkedin.com/in/dmytro-komurko-5075a8194)
-- [▶️ **Backend developer:** Angela Potapchuk](https://www.linkedin.com/in/angela-potapchuk/)
+- [▶️ **Back-end developer:** Dmytro Komurko](https://www.linkedin.com/in/dmytro-komurko-5075a8194)
+- [▶️ **Back-end developer:** Angela Potapchuk](https://www.linkedin.com/in/angela-potapchuk/)
