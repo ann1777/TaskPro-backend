@@ -60,22 +60,36 @@ For detailed descriptions of API requests and interactions, run this project end
 https://taskpro-backend-c73a.onrender.com/api <<BASE_URL>>
 
 BASE_URL/auth/signup <<registration>>
+
 BASE_URL/auth/signin <<login>>
+
 BASE_URL/auth/signout <<logout>>
+
 BASE_URL/auth/current <<curent>>
+
 BASE_URL/auth/updatedata <<update name && || avatar(cloud)>>
+
 BASE_URL/auth/update <<update name && || avatar (backend)>>
+
 BASE_URL/auth/updatetheme <<update theme>>
+
 BASE_URL/auth/help <<send help message >>
 
 BASE_URL/dashboard/ <<get all DASHBOARDS, post>>
+
 BASE_URL/dashboard/:dashboardId <<get byID, del byID, updateByID>>
 
 BASE_URL/column/:dashboardId <<get all COLUMNS, post>>
+
 BASE_URL/column/:dashboardId/:columnId <<get byID, del byID, updateByID>>
 
 BASE_URL/card/:columnId <<get all CARDS, post>>
+
 BASE_URL/card/:columnId/:cardId <<get byID, del byID, updateByID>>
+
+## MondoDB
+
+- ![MondoDB link](https://cloud.mongodb.com/v2/64b7c2e1a6ea8e41b4c0e43e#/metrics/replicaSet/64b7c3279e64f96b41b97eec/explorer/task-pro-db)
 
 ## Our "JustDoIt" team back-end developers
 
