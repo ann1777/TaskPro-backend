@@ -3,7 +3,7 @@ import logger from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
 import swaggerUI from "swagger-ui-express";
-import swaggerDocument from "./swagger.json";
+import swaggerDocument from "./swagger.json" assert { type: "json" };
 import "dotenv/config";
 import authRouter from "./routes/api/auth-router.js";
 import dashboardRouter from "./routes/api/dashboard-router.js";
