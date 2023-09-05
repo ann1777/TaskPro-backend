@@ -11,8 +11,15 @@ import {
 import jimp from "jimp";
 import fs from "fs/promises";
 import path from "path";
-
-const { JWT_SECRET } = process.env;
+const {
+  JWT_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  HOSTING_URL,
+  BASE_URL,
+  FRONTEND_LOGIN_PAGE,
+  LOCAL_FRONTEND_LOGIN_PAGE,
+} = process.env;
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
@@ -167,6 +174,79 @@ const sendHelpEmail = async (req, res) => {
     message: "Your mail has been sent",
   });
 };
+
+const googleAuth = async (req, res) => {
+  const stringifiedParams = queryString.stringify({
+    client_id: GOOGLE_CLIENT_ID,
+    redirect_uri: `${process.env.BASE_URL}/auth/google-redirect`,
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile",
+    ].join(" "),
+    responce_type: "code",
+    access_type: "offline",
+    prompt: "consent",
+  });
+  return res.redirect(
+    `https://account.google.com/o/oauth2/v2/auth?${stringifiedParams}`
+  );
+};
+
+const googleRedirect = async (req, res) => {
+  const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+  const urlObj = new URL(fullUrl);
+  const urlParams = queryString.parse(urlObj.search);
+  const code = urlParams.code;
+  const serverHOST =
+    req.get("host") === "localhost:3007" ? BASE_URL : HOSTING_URL;
+  const frontendHOST =
+    req.get("host") === "localhost:3007"
+      ? LOCAL_FRONTEND_LOGIN_PAGE
+      : FRONTEND_LOGIN_PAGE;
+
+  const tokenData = await axios({
+    url: `https://oauth2.googleapis.com/token`,
+    method: "post",
+    data: {
+      client_id: GOOGLE_CLIENT_ID,
+      client_secret: GOOGLE_CLIENT_SECRET,
+      redirect_uri: `${serverHOST}/api/users/google-redirect`,
+      grant_type: "authorization_code",
+      code,
+    },
+  });
+  const userData = await axios({
+    uri: "https://www.googledapis.com/oauth2/v2/userinfo",
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${tokenData.data.access_token}`,
+    },
+  });
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    const result = await User.create({
+      name,
+      email,
+      password: id,
+    });
+
+    const accessToken = result.signToken();
+    await User.findOneAndUpdate({ email }, { accessToken });
+
+    return res.redirect(
+      `${frontendHOST}/${accessToken}?name=${result.name}&email=${result.email}&theme=${result.theme}&avatarURL=${result.avatarURL}`
+    );
+  }
+  if (user) {
+    const accessToken = user.signToken();
+    await User.findOneAndUpdate({ email }, { accessToken });
+    return res.redirect(
+      `${frontendHOST}/${accessToken}?name=${user.name}&email=${user.email}&theme=${user.theme}&avatarURL=${user.avatarURL}`
+    );
+  }
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
@@ -176,4 +256,6 @@ export default {
   updateUser: ctrlWrapper(updateUser),
   sendHelpEmail: ctrlWrapper(sendHelpEmail),
   updateData: ctrlWrapper(updateData),
+  googleAuth: ctrlWrapper(googleAuth),
+  googleRedirect: ctrlWrapper(googleRedirect),
 };

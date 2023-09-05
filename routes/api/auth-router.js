@@ -2,7 +2,12 @@ import express from "express";
 import userSchemas from "../../schemas/user-schemas.js";
 import { validateBody } from "../../decorators/index.js";
 import authController from "../../controllers/auth-controller.js";
-import { authenticate, isEmptyBody, upload } from "../../middlewares/index.js";
+import {
+  asyncHandler,
+  authenticate,
+  isEmptyBody,
+  upload,
+} from "../../middlewares/index.js";
 
 const authRouter = express.Router();
 
@@ -37,11 +42,15 @@ authRouter.put(
   upload.single("avatar"),
   authController.updateUser
 );
+
 authRouter.post(
   "/help",
   isEmptyBody,
   authenticate,
   authController.sendHelpEmail
 );
+
+authRouter.get("/google", asyncHandler(authController.googleAuth));
+authRouter.get("/google-redirect", asyncHandler(authController.googleRedirect));
 
 export default authRouter;
