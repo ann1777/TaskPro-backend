@@ -50,9 +50,6 @@ const signin = async (req, res) => {
   if (!user) {
     throw HttpError(401, "Email or password invalid");
   }
-  // if (!user.verify) {
-  //   throw HttpError(401, "Email not verify");
-  // }
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw HttpError(401, "Email or password invalid");
@@ -100,7 +97,7 @@ const updateTheme = async (req, res) => {
   const { _id } = req.user;
   const { theme } = req.body;
   const result = await User.findByIdAndUpdate(_id, { theme }, { new: true });
-  res.json(theme);
+  res.json({ theme: result.theme });
 };
 
 const updateData = async (req, res) => {
@@ -118,7 +115,7 @@ const updateData = async (req, res) => {
     { ...newData },
     { new: true }
   );
-  res.json({ name, email, avatarURL });
+  res.json({ name: result.name, avatarURL: result.avatarURL });
 };
 
 export const avatarsDir = path.resolve("public", "avatars");
@@ -151,7 +148,7 @@ const updateUser = async (req, res) => {
       new: true,
     }
   );
-  res.json({ name, email, avatarURL });
+  res.json({ name: result.name, avatarURL: result.avatarURL });
 };
 
 const sendHelpEmail = async (req, res) => {
