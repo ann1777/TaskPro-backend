@@ -1,6 +1,7 @@
 import { ctrlWrapper } from "../decorators/index.js";
 import Column from "../models/column.js";
 import { HttpError } from "../helpers/index.js";
+import Card from "../models/cards.js";
 
 const add = async (req, res, next) => {
   const { dashboardId } = req.params;
@@ -43,6 +44,8 @@ const updateById = async (req, res) => {
 const deleteById = async (req, res, next) => {
   const { columnId } = req.params;
   const result = await Column.findByIdAndDelete(columnId);
+  await Card.deleteMany({ dashboardId });
+
   if (!result) {
     throw HttpError(404, `Column with id=${columnId} not found`);
   }

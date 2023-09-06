@@ -1,5 +1,7 @@
 import { ctrlWrapper } from "../decorators/index.js";
 import Dashboard from "../models/dashboard.js";
+import Column from "../models/column.js";
+import Card from "../models/cards.js";
 import { HttpError, handleGetDashboardsData } from "../helpers/index.js";
 import { google } from "googleapis";
 
@@ -33,6 +35,8 @@ const getById = async (req, res, next) => {
 const deleteById = async (req, res, next) => {
   const { dashboardId } = req.params;
   const result = await Dashboard.findByIdAndDelete(dashboardId);
+  await Column.deleteMany({ dashboardId });
+  await Card.deleteMany({ dashboardId });
   if (!result) {
     throw HttpError(404, `Dashboard with id=${dashboardId} not found`);
   }
