@@ -1,7 +1,7 @@
 import { ctrlWrapper } from "../decorators/index.js";
 import Dashboard from "../models/dashboard.js";
 import Column from "../models/column.js";
-import Card from "../models/cards.js";
+import Card from "../models/card.js";
 import { HttpError, handleGetDashboardsData } from "../helpers/index.js";
 import { google } from "googleapis";
 

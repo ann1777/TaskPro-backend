@@ -1,7 +1,7 @@
 import { ctrlWrapper } from "../decorators/index.js";
 import Column from "../models/column.js";
 import { HttpError } from "../helpers/index.js";
-import Card from "../models/cards.js";
+import Card from "../models/card.js";
 
 const add = async (req, res, next) => {
   const { dashboardId } = req.params;
